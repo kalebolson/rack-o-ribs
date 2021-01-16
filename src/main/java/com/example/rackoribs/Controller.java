@@ -7,11 +7,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class GreetingController {
+public class Controller {
 
+    private static final BinaryConverter bc = new BinaryConverter();
     private static final String template = "Hello, %s!";
     private static final String template1 = "Yello, %s!";
     private final AtomicLong counter = new AtomicLong();
+
+    @GetMapping("/tobinary")
+    public double toBinary(@RequestParam(value = "number") String s){
+        return bc.from_number(s);
+    }
+
+    @GetMapping("/frombinary")
+    public float fromBinary(@RequestParam(value = "binary") String s){
+        return bc.from_binary(s);
+    }
 
     @GetMapping("/greeting")
     public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
