@@ -15,13 +15,19 @@ public class Controller {
     private final AtomicLong counter = new AtomicLong();
 
     @GetMapping("/tobinary")
-    public double toBinary(@RequestParam(value = "number") String s){
-        return bc.from_number(s);
+    public Binary toBinary(@RequestParam(value = "number") int num){
+        Binary b = new Binary(counter.incrementAndGet());
+        b.setNumerical(num);
+        b.setBinary(bc.from_number(num+"")+"");
+        return b;
     }
 
     @GetMapping("/frombinary")
-    public float fromBinary(@RequestParam(value = "binary") String s){
-        return bc.from_binary(s);
+    public Binary fromBinary(@RequestParam(value = "binary") String bin){
+        Binary b = new Binary(counter.incrementAndGet());
+        b.setBinary(bin);
+        b.setNumerical((int) bc.from_binary(bin));
+        return b;
     }
 
     @GetMapping("/greeting")
